@@ -1,4 +1,4 @@
-﻿using IDP;
+﻿using IDP.Extensions;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
