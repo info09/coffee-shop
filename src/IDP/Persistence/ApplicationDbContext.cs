@@ -8,8 +8,9 @@ public class ApplicationDbContext : IdentityDbContext<User>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
-        
     }
+
+    public DbSet<Permission> Permissions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
