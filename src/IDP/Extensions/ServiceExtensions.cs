@@ -86,7 +86,8 @@ public static class ServiceExtensions
                 opt.EnableTokenCleanup = true;
                 opt.TokenCleanupInterval = 3600; // every hour
             })
-            .AddAspNetIdentity<User>();
+            .AddAspNetIdentity<User>()
+            .AddProfileService<IdentityProfileService>();
     }
 
     public static void ConfigureIdentity(this IServiceCollection services, IConfiguration configuration)
