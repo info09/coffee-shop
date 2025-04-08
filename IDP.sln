@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		src\docker-compose.yml = src\docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDP.Presentation", "src\IDP.Presentation\IDP.Presentation.csproj", "{577928AB-793F-46E6-B2DF-C78E821662C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,8 +21,15 @@ Global
 		{35ABA4F2-25A6-46F4-9359-2EA81A027B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35ABA4F2-25A6-46F4-9359-2EA81A027B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35ABA4F2-25A6-46F4-9359-2EA81A027B41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{577928AB-793F-46E6-B2DF-C78E821662C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{577928AB-793F-46E6-B2DF-C78E821662C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{577928AB-793F-46E6-B2DF-C78E821662C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{577928AB-793F-46E6-B2DF-C78E821662C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8AC0D6F6-4D1F-458A-A797-A478347F902E}
 	EndGlobalSection
 EndGlobal

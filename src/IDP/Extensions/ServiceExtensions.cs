@@ -1,10 +1,10 @@
-﻿using Duende.IdentityServer.Test;
-using IDP.Common;
+﻿using IDP.Common;
 using IDP.Entities;
 using IDP.Persistence;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+
 using Serilog;
 
 namespace IDP.Extensions;
@@ -118,5 +118,26 @@ public static class ServiceExtensions
             .AddEntityFrameworkStores<ApplicationDbContext>()
             //.AddUserStore<TeduUserStore>()
             .AddDefaultTokenProviders();
+    }
+
+    public static void ConfigureSwagger(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen(c =>
+        {
+            c.EnableAnnotations();
+            c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+            {
+                Title = "IDP",
+                Version = "v1",
+                Description = "",
+                Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                {
+                    Name = "IDP",
+                    Email = "huytq@ics-p.vn",
+                    Url = new Uri("ics-p.vn")
+                }
+            });
+        });
     }
 }

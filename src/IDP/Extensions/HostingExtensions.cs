@@ -1,6 +1,10 @@
 using IDP.Common.Domains;
+using IDP.Common.Repositories;
 using IDP.Services.EmailService;
+
 using Serilog;
+
+using System.Reflection.Metadata;
 
 namespace IDP.Extensions;
 
@@ -24,6 +28,16 @@ internal static class HostingExtensions
 
         builder.Services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
         builder.Services.AddTransient(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
+        builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
+        builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+
+        builder.Services.AddControllers(config =>
+        {
+            config.RespectBrowserAcceptHeader = true;
+            config.ReturnHttpNotAcceptable = true;
+        }).AddApplicationPart(typeof(AssemblyReference).Assembly);
+
+        builder.Services.ConfigureSwagger(builder.Configuration);
 
         return builder.Build();
     }
@@ -41,6 +55,9 @@ internal static class HostingExtensions
         app.UseStaticFiles();
 
         app.UseCors("CorsPolicy");
+
+        app.UseSwagger();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IDP"));
 
         app.UseRouting();
 
