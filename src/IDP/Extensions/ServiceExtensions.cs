@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 
 namespace IDP.Extensions;
@@ -64,10 +65,22 @@ public static class ServiceExtensions
 #if DEBUG
             .AddDeveloperSigningCredential()
 #endif
-            .AddInMemoryIdentityResources(Config.IdentityResources)
-            .AddInMemoryApiScopes(Config.ApiScopes)
-            .AddInMemoryClients(Config.Clients)
-            .AddInMemoryApiResources(Config.ApiResources)
-            .AddTestUsers(TestUsers.Users);
+            //.AddInMemoryIdentityResources(Config.IdentityResources)
+            //.AddInMemoryApiScopes(Config.ApiScopes)
+            //.AddInMemoryClients(Config.Clients)
+            //.AddInMemoryApiResources(Config.ApiResources)
+            //.AddTestUsers(TestUsers.Users)
+            .AddConfigurationStore(options =>
+            {
+                options.ConfigureDbContext = builder =>
+                    builder.UseSqlServer(connectionString, sql => sql.MigrationsAssembly("IDP"));
+            })
+            .AddOperationalStore(opt =>
+            {
+                opt.ConfigureDbContext = builder =>
+                    builder.UseSqlServer(connectionString, sql => sql.MigrationsAssembly("IDP"));
+                opt.EnableTokenCleanup = true;
+                opt.TokenCleanupInterval = 3600; // every hour
+            });
     }
 }
