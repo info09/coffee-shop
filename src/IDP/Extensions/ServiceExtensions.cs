@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Duende.IdentityServer.Test;
+using IDP.Entities;
+using IDP.Persistence;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
@@ -81,6 +85,30 @@ public static class ServiceExtensions
                     builder.UseSqlServer(connectionString, sql => sql.MigrationsAssembly("IDP"));
                 opt.EnableTokenCleanup = true;
                 opt.TokenCleanupInterval = 3600; // every hour
-            });
+            })
+            .AddAspNetIdentity<User>();
+    }
+
+    public static void ConfigureIdentity(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("IdentitySqlConnection");
+        services
+            .AddDbContext<ApplicationDbContext>(options => options
+                .UseSqlServer(connectionString))
+            .AddIdentity<User, IdentityRole>(opt =>
+            {
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireDigit = false;
+                opt.Password.RequiredLength = 6;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireLowercase = false;
+                opt.User.RequireUniqueEmail = true;
+                opt.Lockout.AllowedForNewUsers = true;
+                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                opt.Lockout.MaxFailedAccessAttempts = 3;
+            })
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            //.AddUserStore<TeduUserStore>()
+            .AddDefaultTokenProviders();
     }
 }
