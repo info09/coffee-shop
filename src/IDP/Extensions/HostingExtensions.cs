@@ -1,3 +1,4 @@
+using IDP.Services.EmailService;
 using Serilog;
 
 namespace IDP.Extensions;
@@ -6,8 +7,11 @@ internal static class HostingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
+        builder.Services.AddConfigurationSettings(builder.Configuration);
         // uncomment if you want to add a UI
         builder.Services.AddRazorPages();
+
+        builder.Services.AddScoped<IEmailSender, SmtpMailService>();
 
         builder.Services.ConfigureCookiePolicy();
 

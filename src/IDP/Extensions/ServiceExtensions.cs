@@ -1,4 +1,5 @@
 ﻿using Duende.IdentityServer.Test;
+using IDP.Common;
 using IDP.Entities;
 using IDP.Persistence;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +11,12 @@ namespace IDP.Extensions;
 
 public static class ServiceExtensions
 {
+    public static IServiceCollection AddConfigurationSettings(this IServiceCollection services, IConfiguration configuration)
+    {
+        var emailSettings = configuration.GetSection(nameof(SMTPEmailSetting)).Get<SMTPEmailSetting>();
+        services.AddSingleton(emailSettings!);
+        return services;
+    }
     public static void AddAppConfigurations(this ConfigureHostBuilder host)
     {
         host.ConfigureAppConfiguration((hostingContext, config) =>
