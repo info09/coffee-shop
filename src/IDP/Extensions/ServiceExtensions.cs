@@ -135,7 +135,7 @@ public static class ServiceExtensions
                 {
                     Name = "IDP",
                     Email = "huytq@ics-p.vn",
-                    Url = new Uri("ics-p.vn")
+                    Url = new Uri("https://ics-p.vn/")
                 }
             });
         });

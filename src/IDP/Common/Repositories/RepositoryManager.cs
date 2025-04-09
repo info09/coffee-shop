@@ -25,25 +25,25 @@ public class RepositoryManager : IRepositoryManager
 
     public RoleManager<IdentityRole> RoleManager { get; }
 
-    public IPermissionRepository Permission => throw new NotImplementedException();
+    public IPermissionRepository Permission => _permissionRepository.Value;
 
     public Task<IDbContextTransaction> BeginTransactionAsync()
     {
-        throw new NotImplementedException();
+        return _context.Database.BeginTransactionAsync();
     }
 
     public Task EndTransactionAsync()
     {
-        throw new NotImplementedException();
+        return _context.Database.CommitTransactionAsync();
     }
 
     public void RollbackTransaction()
     {
-        throw new NotImplementedException();
+        _context.Database.RollbackTransaction();
     }
 
-    public Task<int> SaveAsync()
+    public async Task<int> SaveAsync()
     {
-        throw new NotImplementedException();
+        return await _unitOfWork.CommitAsync();
     }
 }
