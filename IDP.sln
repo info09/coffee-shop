@@ -13,6 +13,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDP.Presentation", "src\IDP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDP.Infrastructure", "src\IDP.Infrastructure\IDP.Infrastructure.csproj", "{F6215AB3-1DBB-45B6-8656-48F6A34E8615}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DatabaseScript", "DatabaseScript", "{E6AA55C2-9AB7-4F26-AEE8-BA18F91A6E24}"
+	ProjectSection(SolutionItems) = preProject
+		database_script\Create_Permission.sql = database_script\Create_Permission.sql
+		database_script\Delete_Permission.sql = database_script\Delete_Permission.sql
+		database_script\Get_Permission_ByRoleId.sql = database_script\Get_Permission_ByRoleId.sql
+		database_script\idp_stores.sql = database_script\idp_stores.sql
+		database_script\Update_Permissions_ByRole.sql = database_script\Update_Permissions_ByRole.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

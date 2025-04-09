@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Identity;
-using IDP.Entities;
+using IDP.Infrastructure.Entities;
 
 namespace IDP.Pages.Logout;
 

@@ -1,7 +1,7 @@
 ﻿using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
-using IDP.Entities;
+using IDP.Infrastructure.Entities;
 using IDP.Infrastructure.Common;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;

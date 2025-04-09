@@ -1,5 +1,5 @@
 ﻿using Duende.IdentityModel;
-using IDP.Entities;
+using IDP.Infrastructure.Entities;
 using IDP.Infrastructure.Common;
 using IDP.Persistence;
 using Microsoft.AspNetCore.Identity;

@@ -1,4 +1,5 @@
-﻿using IDP.Infrastructure.Domains;
+﻿using AutoMapper;
+using IDP.Infrastructure.Domains;
 using IDP.Infrastructure.Entities;
 using IDP.Persistence;
 using Microsoft.AspNetCore.Identity;
@@ -10,20 +11,23 @@ public class RepositoryManager : IRepositoryManager
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ApplicationDbContext _context;
+    private readonly IMapper _mapper;
     private readonly Lazy<IPermissionRepository> _permissionRepository;
 
-    public RepositoryManager(IUnitOfWork unitOfWork, ApplicationDbContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+    public RepositoryManager(IUnitOfWork unitOfWork, ApplicationDbContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _context = context;
-        UserManager = userManager;
-        RoleManager = roleManager;
-        _permissionRepository = new Lazy<IPermissionRepository>(() => new PermissionRepository(_context, unitOfWork));
+        //UserManager = userManager;
+        //RoleManager = roleManager;
+        _mapper = mapper;
+        _permissionRepository = new Lazy<IPermissionRepository>(() => new PermissionRepository(_context, unitOfWork, userManager, mapper));
+        
     }
 
-    public UserManager<User> UserManager { get; }
+    //public UserManager<User> UserManager { get; }
 
-    public RoleManager<IdentityRole> RoleManager { get; }
+    //public RoleManager<IdentityRole> RoleManager { get; }
 
     public IPermissionRepository Permission => _permissionRepository.Value;
 

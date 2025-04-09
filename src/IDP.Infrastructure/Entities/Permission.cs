@@ -14,6 +14,12 @@ public class Permission : EntityBase<long>
         RoleId = roleId;
     }
 
+    public Permission(long id, string function, string command, string roleId)
+        : this(function, command, roleId)
+    {
+        Id = id;
+    }
+
     [Key]
     [MaxLength(50)]
     [Column(TypeName = "varchar(50)")]

@@ -12,7 +12,7 @@ public class SmtpMailService : IEmailSender
         _smtpEmailSetting = smtpEmailSetting;
     }
 
-    public void SendEmail(string recipient, string subject, string body, bool isBodyHtml = false, string sender = null)
+    public void SendEmail(string recipient, string subject, string body, bool isBodyHtml = false, string? sender = null)
     {
         var message = new MailMessage(_smtpEmailSetting.From, recipient)
         {

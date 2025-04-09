@@ -1,5 +1,5 @@
 ﻿using IDP.Common;
-using IDP.Entities;
+using IDP.Infrastructure.Entities;
 using IDP.Persistence;
 
 using Microsoft.AspNetCore.Identity;

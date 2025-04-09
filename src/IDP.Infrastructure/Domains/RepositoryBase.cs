@@ -1,26 +1,31 @@
-﻿using IDP.Persistence;
+﻿using Dapper;
+using IDP.Infrastructure.Exceptions;
+using IDP.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Data;
 using System.Linq.Expressions;
 
 namespace IDP.Infrastructure.Domains;
 
-public class RepositoryBase<T, K> : IRepositoryBase<T, K> where T : EntityBase<K>
+public class RepositoryBase<T, K> : IRepositoryBase<T, K>
+    where T : EntityBase<K>
 {
-    private readonly ApplicationDbContext _context;
+    private readonly ApplicationDbContext _dbContext;
     private readonly IUnitOfWork _unitOfWork;
 
-    public RepositoryBase(ApplicationDbContext context, IUnitOfWork unitOfWork)
+    public RepositoryBase(ApplicationDbContext dbContext,
+        IUnitOfWork unitOfWork)
     {
-        _context = context;
-        _unitOfWork = unitOfWork;
+        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
     #region Query
 
     public IQueryable<T> FindAll(bool trackChanges = false) =>
-        !trackChanges ? _context.Set<T>().AsNoTracking() :
-            _context.Set<T>();
+        !trackChanges ? _dbContext.Set<T>().AsNoTracking() :
+            _dbContext.Set<T>();
 
     public IQueryable<T> FindAll(bool trackChanges = false,
         params Expression<Func<T, object>>[] includeProperties)
@@ -33,8 +38,8 @@ public class RepositoryBase<T, K> : IRepositoryBase<T, K> where T : EntityBase<K
     public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression,
         bool trackChanges = false)
     => !trackChanges
-        ? _context.Set<T>().Where(expression).AsNoTracking()
-        : _context.Set<T>().Where(expression);
+        ? _dbContext.Set<T>().Where(expression).AsNoTracking()
+        : _dbContext.Set<T>().Where(expression);
 
     public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression,
         bool trackChanges = false,
@@ -45,10 +50,10 @@ public class RepositoryBase<T, K> : IRepositoryBase<T, K> where T : EntityBase<K
         return items;
     }
 
-    public Task<T> GetByIdAsync(K id)
+    public Task<T?> GetByIdAsync(K id)
         => FindByCondition(x => x.Id.Equals(id)).FirstOrDefaultAsync();
 
-    public Task<T> GetByIdAsync(K id, params Expression<Func<T, object>>[] includeProperties)
+    public Task<T?> GetByIdAsync(K id, params Expression<Func<T, object>>[] includeProperties)
         => FindByCondition(x => x.Id.Equals(id), trackChanges: false, includeProperties)
             .FirstOrDefaultAsync();
 
@@ -58,51 +63,85 @@ public class RepositoryBase<T, K> : IRepositoryBase<T, K> where T : EntityBase<K
 
     public async Task<K> CreateAsync(T entity)
     {
-        await _context.Set<T>().AddAsync(entity);
+        await _dbContext.Set<T>().AddAsync(entity);
         await SaveChangesAsync();
         return entity.Id;
     }
 
     public async Task UpdateAsync(T entity)
     {
-        if (_context.Entry(entity).State == EntityState.Unchanged) return;
+        if (_dbContext.Entry(entity).State == EntityState.Unchanged) return;
 
-        T exist = await _context.Set<T>().FindAsync(entity.Id);
-        _context.Entry(exist).CurrentValues.SetValues(entity);
+        T exist = await _dbContext.Set<T>().FindAsync(entity.Id);
+        _dbContext.Entry(exist).CurrentValues.SetValues(entity);
         await SaveChangesAsync();
     }
 
     public async Task UpdateListAsync(IEnumerable<T> entities)
     {
-        await _context.Set<T>().AddRangeAsync(entities);
+        await _dbContext.Set<T>().AddRangeAsync(entities);
         await SaveChangesAsync();
     }
 
     public async Task DeleteAsync(T entity)
     {
-        _context.Set<T>().Remove(entity);
+        _dbContext.Set<T>().Remove(entity);
         await SaveChangesAsync();
     }
 
     public async Task DeleteListAsync(IEnumerable<T> entities)
     {
-        _context.Set<T>().RemoveRange(entities);
+        _dbContext.Set<T>().RemoveRange(entities);
         await SaveChangesAsync();
     }
 
     #endregion
 
+    #region Dapper
+
+    public async Task<IReadOnlyList<TModel>> QueryAsync<TModel>(string sql, object? param,
+        CommandType? commandType = CommandType.StoredProcedure, IDbTransaction? transaction = null, int? commandTimeout = 30)
+    where TModel : EntityBase<K>
+    {
+        return (await _dbContext.Connection.QueryAsync<TModel>(sql, param,
+                transaction, 30, CommandType.StoredProcedure)).AsList();
+    }
+
+    public async Task<TModel> QueryFirstOrDefaultAsync<TModel>(string sql, object? param,
+        CommandType? commandType = CommandType.StoredProcedure, IDbTransaction? transaction = null, int? commandTimeout = 30)
+        where TModel : EntityBase<K>
+    {
+        var entity = await _dbContext.Connection.QueryFirstOrDefaultAsync<TModel>(sql, param, transaction, commandTimeout, commandType);
+        if (entity == null) throw new EntityNotFoundException();
+        return entity;
+    }
+
+    public async Task<TModel> QuerySingleAsync<TModel>(string sql, object? param,
+        CommandType? commandType = CommandType.StoredProcedure, IDbTransaction? transaction = null, int? commandTimeout = 30)
+        where TModel : EntityBase<K>
+    {
+        return await _dbContext.Connection.QuerySingleAsync<TModel>(sql, param, transaction, commandTimeout, commandType);
+    }
+
+    public async Task<int> ExecuteAsync(string sql, object? param,
+        CommandType? commandType = CommandType.StoredProcedure, IDbTransaction? transaction = null, int? commandTimeout = 30)
+    {
+        return await _dbContext.Connection.ExecuteAsync(sql, param, transaction, commandTimeout, commandType);
+    }
+
+    #endregion Dapper
+
     public Task<int> SaveChangesAsync() => _unitOfWork.CommitAsync();
 
     public Task<IDbContextTransaction> BeginTransactionAsync()
-        => _context.Database.BeginTransactionAsync();
+        => _dbContext.Database.BeginTransactionAsync();
 
     public async Task EndTransactionAsync()
     {
         await SaveChangesAsync();
-        await _context.Database.CommitTransactionAsync();
+        await _dbContext.Database.CommitTransactionAsync();
     }
 
     public Task RollbackTransactionAsync()
-        => _context.Database.RollbackTransactionAsync();
+        => _dbContext.Database.RollbackTransactionAsync();
 }
