@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
-namespace IDP.Persistence;
+namespace IDP.Infrastructure.Persistence;
 
 public class ApplicationDbContext : IdentityDbContext<User>
 {

@@ -2,8 +2,8 @@
 using Dapper;
 using IDP.Infrastructure.Domains;
 using IDP.Infrastructure.Entities;
+using IDP.Infrastructure.Persistence;
 using IDP.Infrastructure.ViewModels;
-using IDP.Persistence;
 using Microsoft.AspNetCore.Identity;
 using System.Data;
 

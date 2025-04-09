@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using IDP.Infrastructure.Exceptions;
-using IDP.Persistence;
+using IDP.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;

@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace IDP.Migrations.IdentityServer.PersistedGrant
+namespace IDP.Persistence.Migrations.PersistedGrant
 {
     /// <inheritdoc />
-    public partial class InitialPersistedGrantMigration : Migration
+    public partial class InitPersistedGrantDbContext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

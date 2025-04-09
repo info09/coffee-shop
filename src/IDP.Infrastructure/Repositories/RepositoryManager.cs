@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using IDP.Infrastructure.Domains;
 using IDP.Infrastructure.Entities;
-using IDP.Persistence;
+using IDP.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Storage;
 

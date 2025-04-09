@@ -1,4 +1,4 @@
-﻿using IDP.Persistence;
+﻿using IDP.Infrastructure.Persistence;
 
 namespace IDP.Infrastructure.Domains;
 

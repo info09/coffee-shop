@@ -1,10 +1,10 @@
 ﻿using Duende.IdentityModel;
 using IDP.Infrastructure.Entities;
 using IDP.Infrastructure.Common;
-using IDP.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using IDP.Infrastructure.Persistence;
 
 namespace IDP.Persistence;
 

@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace IDP.Persistence.Migrations
+namespace IDP.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialApplicationMigration : Migration
+    public partial class InitApplicationDbContext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -134,6 +134,29 @@ namespace IDP.Persistence.Migrations
                     table.PrimaryKey("PK_UserTokens", x => x.UserId);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Permissions",
+                schema: "Identity",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Function = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    RoleId = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Command = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Permissions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Permissions_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalSchema: "Identity",
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 schema: "Identity",
                 table: "Roles",
@@ -143,6 +166,14 @@ namespace IDP.Persistence.Migrations
                     { "b4365573-ff95-4015-8dd0-adf0650354a2", null, "Customer", "CUSTOMER" },
                     { "b6105f01-18f5-433c-91e0-dbd80d27e7f4", null, "Administrator", "ADMINISTRATOR" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Permissions_RoleId_Function_Command",
+                schema: "Identity",
+                table: "Permissions",
+                columns: new[] { "RoleId", "Function", "Command" },
+                unique: true,
+                filter: "[Function] IS NOT NULL AND [Command] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
@@ -155,11 +186,11 @@ namespace IDP.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RoleClaims",
+                name: "Permissions",
                 schema: "Identity");
 
             migrationBuilder.DropTable(
-                name: "Roles",
+                name: "RoleClaims",
                 schema: "Identity");
 
             migrationBuilder.DropTable(
@@ -180,6 +211,10 @@ namespace IDP.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserTokens",
+                schema: "Identity");
+
+            migrationBuilder.DropTable(
+                name: "Roles",
                 schema: "Identity");
         }
     }

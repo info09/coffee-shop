@@ -2,7 +2,7 @@ using IDP.Infrastructure.Domains;
 using IDP.Infrastructure.Repositories;
 using IDP.Presentation;
 using IDP.Services.EmailService;
-
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
 namespace IDP.Extensions;
@@ -35,7 +35,11 @@ internal static class HostingExtensions
         {
             config.RespectBrowserAcceptHeader = true;
             config.ReturnHttpNotAcceptable = true;
+            config.Filters.Add(new ProducesAttribute("application/json", "text/plain", "text/json"));
         }).AddApplicationPart(typeof(AssemblyReference).Assembly);
+
+        builder.Services.ConfigureAuthentication();
+        builder.Services.ConfigureAuthorization();
 
         builder.Services.ConfigureSwagger(builder.Configuration);
 
@@ -57,7 +61,12 @@ internal static class HostingExtensions
         app.UseCors("CorsPolicy");
 
         app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IDP"));
+        app.UseSwaggerUI(c =>
+        {
+            c.OAuthClientId("idp_swagger");
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "IDP");
+            c.DisplayRequestDuration();
+        });
 
         app.UseRouting();
 
@@ -68,7 +77,7 @@ internal static class HostingExtensions
         // uncomment if you want to add a UI
         app.UseAuthorization();
 
-        app.MapDefaultControllerRoute();
+        app.MapDefaultControllerRoute().RequireAuthorization("Bearer");
         app.MapRazorPages().RequireAuthorization();
 
         return app;

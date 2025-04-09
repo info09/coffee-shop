@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace IDP.Migrations.IdentityServer.PersistedGrant
+namespace IDP.Persistence.Migrations.PersistedGrant
 {
     [DbContext(typeof(PersistedGrantDbContext))]
-    [Migration("20250408064405_InitialPersistedGrantMigration")]
-    partial class InitialPersistedGrantMigration
+    [Migration("20250409063635_InitPersistedGrantDbContext")]
+    partial class InitPersistedGrantDbContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

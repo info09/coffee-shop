@@ -1,5 +1,5 @@
 ﻿using IDP.Infrastructure.Entities;
-using IDP.Persistence;
+using IDP.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

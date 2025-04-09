@@ -48,13 +48,13 @@ public static class Config
                     AccessTokenLifetime = 60 * 60 * 2,
                     RedirectUris =
                     {
-                        "https://localhost:5000/swagger/oauth2-redirect.html",
+                        "http://localhost:5001/swagger/oauth2-redirect.html",
                     },
                     PostLogoutRedirectUris =
                     {
-                        "https://localhost:5000/swagger/oauth2-redirect.html",
+                        "http://localhost:5001/swagger/oauth2-redirect.html",
                     },
-                    AllowedCorsOrigins = { "https://localhost:5000" },
+                    AllowedCorsOrigins = { "http://localhost:5001" },
                     AllowedScopes = 
                     { 
                         IdentityServerConstants.StandardScopes.OpenId,

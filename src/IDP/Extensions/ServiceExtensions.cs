@@ -1,10 +1,9 @@
 ﻿using IDP.Common;
 using IDP.Infrastructure.Entities;
-using IDP.Persistence;
-
+using IDP.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.OpenApi.Models;
 using Serilog;
 
 namespace IDP.Extensions;
@@ -137,6 +136,61 @@ public static class ServiceExtensions
                     Url = new Uri("https://ics-p.vn/")
                 }
             });
+
+            var identityServerBaseUrl = configuration.GetSection("IdentityServer:BaseUrl").Value;
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.OAuth2,
+                Flows = new OpenApiOAuthFlows
+                {
+                    Implicit = new OpenApiOAuthFlow
+                    {
+                        AuthorizationUrl = new Uri($"{identityServerBaseUrl}/connect/authorize"),
+                        Scopes = new Dictionary<string, string>
+                        {
+                            { "IDP_api.read", "IDP API Read Scope" },
+                            { "IDP_api.write", "IDP API Write Scope" }
+                        }
+                    }
+                }
+            });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                    },
+                    new List<string>
+                    {
+                        "tedu_microservices_api.read",
+                        "tedu_microservices_api.write"
+                    }
+                }
+            });
         });
+    }
+
+    public static void ConfigureAuthentication(this IServiceCollection services)
+    {
+        services
+            .AddAuthentication()
+            .AddLocalApi("Bearer", option =>
+            {
+                option.ExpectedScope = "tedu_microservices_api.read";
+            });
+    }
+
+    public static void ConfigureAuthorization(this IServiceCollection services)
+    {
+        services.AddAuthorization(
+            options =>
+            {
+                options.AddPolicy("Bearer", policy =>
+                {
+                    policy.AddAuthenticationSchemes("Bearer");
+                    policy.RequireAuthenticatedUser();
+                });
+            });
     }
 }
