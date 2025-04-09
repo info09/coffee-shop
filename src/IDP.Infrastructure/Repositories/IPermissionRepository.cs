@@ -1,7 +1,7 @@
-﻿using IDP.Common.Domains;
-using IDP.Entities;
+﻿using IDP.Infrastructure.Domains;
+using IDP.Infrastructure.Entities;
 
-namespace IDP.Common.Repositories;
+namespace IDP.Infrastructure.Repositories;
 
 public interface IPermissionRepository : IRepositoryBase<Permission, long>
 {

@@ -1,5 +1,5 @@
-using IDP.Common.Domains;
-using IDP.Common.Repositories;
+using IDP.Infrastructure.Domains;
+using IDP.Infrastructure.Repositories;
 using IDP.Presentation;
 using IDP.Services.EmailService;
 

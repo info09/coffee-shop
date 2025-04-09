@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace IDP.Entities;
+namespace IDP.Infrastructure.Entities;
 
 public class Permission : EntityBase<long>
 {

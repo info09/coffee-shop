@@ -1,7 +1,6 @@
-﻿
-using IDP.Persistence;
+﻿using IDP.Persistence;
 
-namespace IDP.Common.Domains;
+namespace IDP.Infrastructure.Domains;
 
 public class UnitOfWork : IUnitOfWork
 {

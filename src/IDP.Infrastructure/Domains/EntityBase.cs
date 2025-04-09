@@ -1,4 +1,4 @@
-﻿namespace IDP.Common.Domains;
+﻿namespace IDP.Infrastructure.Domains;
 
 public abstract class EntityBase<TKey> : IEntityBase<TKey>
 {

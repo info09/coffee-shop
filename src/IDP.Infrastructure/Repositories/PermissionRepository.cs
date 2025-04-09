@@ -1,8 +1,8 @@
-﻿using IDP.Common.Domains;
-using IDP.Entities;
+﻿using IDP.Infrastructure.Domains;
+using IDP.Infrastructure.Entities;
 using IDP.Persistence;
 
-namespace IDP.Common.Repositories;
+namespace IDP.Infrastructure.Repositories;
 
 public class PermissionRepository : RepositoryBase<Permission, long>, IPermissionRepository
 {

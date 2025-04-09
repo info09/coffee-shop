@@ -1,4 +1,4 @@
-﻿using IDP.Entities;
+﻿using IDP.Infrastructure.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

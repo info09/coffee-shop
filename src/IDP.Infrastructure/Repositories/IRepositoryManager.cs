@@ -1,8 +1,8 @@
-﻿using IDP.Entities;
+﻿using IDP.Infrastructure.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace IDP.Common.Repositories;
+namespace IDP.Infrastructure.Repositories;
 
 public interface IRepositoryManager
 {

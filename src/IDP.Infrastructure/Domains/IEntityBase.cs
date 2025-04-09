@@ -1,4 +1,4 @@
-﻿namespace IDP.Common.Domains;
+﻿namespace IDP.Infrastructure.Domains;
 
 public interface IEntityBase<T>
 {

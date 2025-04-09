@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace IDP.Entities;
+namespace IDP.Infrastructure.Entities;
 
 public static class ModelBuilderExtensions
 {

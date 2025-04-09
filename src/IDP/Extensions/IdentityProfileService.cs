@@ -1,11 +1,10 @@
 ﻿using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
-using IDP.Common;
 using IDP.Entities;
+using IDP.Infrastructure.Common;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using System.Text.Json;
 
 namespace IDP.Extensions;
 

@@ -1,6 +1,7 @@
 ﻿using Duende.IdentityModel;
-using IDP.Common;
 using IDP.Entities;
+using IDP.Infrastructure.Common;
+using IDP.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -26,7 +27,7 @@ public static class SeedUserData
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-        using(var serviceProvider = service.BuildServiceProvider())
+        using (var serviceProvider = service.BuildServiceProvider())
         {
             using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {

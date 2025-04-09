@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace IDP.Common.Domains;
+namespace IDP.Infrastructure.Domains;
 
 public interface IUnitOfWork : IDisposable
 {

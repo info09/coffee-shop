@@ -1,4 +1,4 @@
-﻿namespace IDP.Common;
+﻿namespace IDP.Infrastructure.Common;
 
 public static class SystemConstants
 {

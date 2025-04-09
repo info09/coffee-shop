@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Linq.Expressions;
 
-namespace IDP.Common.Domains;
+namespace IDP.Infrastructure.Domains;
 
 public class RepositoryBase<T, K> : IRepositoryBase<T, K> where T : EntityBase<K>
 {

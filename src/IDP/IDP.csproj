@@ -30,6 +30,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\IDP.Infrastructure\IDP.Infrastructure.csproj" />
 	  <ProjectReference Include="..\IDP.Presentation\IDP.Presentation.csproj" />
 	</ItemGroup>
 </Project>

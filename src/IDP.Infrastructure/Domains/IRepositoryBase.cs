@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using System.Linq.Expressions;
 
-namespace IDP.Common.Domains
+namespace IDP.Infrastructure.Domains
 {
     public interface IRepositoryBase<T, K> where T : EntityBase<K>
     {

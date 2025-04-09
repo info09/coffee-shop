@@ -1,9 +1,8 @@
-﻿using IDP.Common;
-using IDP.Infrastructure.Common;
+﻿using IDP.Infrastructure.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace IDP.Entities.Configurations
+namespace IDP.Infrastructure.Entities.Configurations
 {
     public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
     {

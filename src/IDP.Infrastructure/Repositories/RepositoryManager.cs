@@ -1,10 +1,10 @@
-﻿using IDP.Common.Domains;
-using IDP.Entities;
+﻿using IDP.Infrastructure.Domains;
+using IDP.Infrastructure.Entities;
 using IDP.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace IDP.Common.Repositories;
+namespace IDP.Infrastructure.Repositories;
 
 public class RepositoryManager : IRepositoryManager
 {
