@@ -62,6 +62,7 @@ public static class ServiceExtensions
     public static void ConfigureIdentityServer(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("IdentitySqlConnection");
+        var issuer = configuration.GetSection("IdentityServer:IssuerUri").Value;
         services.AddIdentityServer(options =>
             {
                 // https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/api_scopes#authorization-based-on-scopes
@@ -70,6 +71,8 @@ public static class ServiceExtensions
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
                 options.Events.RaiseInformationEvents = true;
+
+                options.IssuerUri = issuer;
             })
 #if DEBUG
             .AddDeveloperSigningCredential()
@@ -163,8 +166,8 @@ public static class ServiceExtensions
                     },
                     new List<string>
                     {
-                        "tedu_microservices_api.read",
-                        "tedu_microservices_api.write"
+                        "IDP_api.read",
+                        "IDP_api.write"
                     }
                 }
             });
