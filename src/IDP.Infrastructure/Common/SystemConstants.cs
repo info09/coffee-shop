@@ -22,15 +22,13 @@ public static class SystemConstants
 
     public static class Functions
     {
-        public const string Role = "ROLE";
-        public const string Product = "PRODUCT";
+        public const string Company = "COMPANY";
 
         public static List<string> GetAllFunctions()
         {
             return new List<string>
             {
-                Role,
-                Product
+                Company
             };
         }
     }
