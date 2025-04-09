@@ -51,10 +51,10 @@ public class RepositoryBase<T, K> : IRepositoryBase<T, K>
     }
 
     public Task<T?> GetByIdAsync(K id)
-        => FindByCondition(x => x.Id.Equals(id)).FirstOrDefaultAsync();
+        => FindByCondition(x => x.Id!.Equals(id)).FirstOrDefaultAsync();
 
     public Task<T?> GetByIdAsync(K id, params Expression<Func<T, object>>[] includeProperties)
-        => FindByCondition(x => x.Id.Equals(id), trackChanges: false, includeProperties)
+        => FindByCondition(x => x.Id!.Equals(id), trackChanges: false, includeProperties)
             .FirstOrDefaultAsync();
 
     #endregion
@@ -72,7 +72,7 @@ public class RepositoryBase<T, K> : IRepositoryBase<T, K>
     {
         if (_dbContext.Entry(entity).State == EntityState.Unchanged) return;
 
-        T exist = await _dbContext.Set<T>().FindAsync(entity.Id);
+        T? exist = await _dbContext.Set<T>().FindAsync(entity.Id) ?? throw new InvalidOperationException("Entity not found in the database.");
         _dbContext.Entry(exist).CurrentValues.SetValues(entity);
         await SaveChangesAsync();
     }

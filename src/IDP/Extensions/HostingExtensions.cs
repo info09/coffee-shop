@@ -67,11 +67,9 @@ internal static class HostingExtensions
 
         // uncomment if you want to add a UI
         app.UseAuthorization();
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapDefaultControllerRoute();
-            endpoints.MapRazorPages().RequireAuthorization();
-        });
+
+        app.MapDefaultControllerRoute();
+        app.MapRazorPages().RequireAuthorization();
 
         return app;
     }

@@ -6,7 +6,7 @@ Log.Information("Starting up");
 var builder = WebApplication.CreateBuilder(args);
 try
 {
-    builder.Host.AddAppConfigurations();
+    builder.AddAppConfigurations();
     builder.Host.ConfigureSerilog();
 
     var app = builder

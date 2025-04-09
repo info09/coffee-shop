@@ -17,15 +17,14 @@ public static class ServiceExtensions
         services.AddSingleton(emailSettings!);
         return services;
     }
-    public static void AddAppConfigurations(this ConfigureHostBuilder host)
+    public static void AddAppConfigurations(this WebApplicationBuilder builder)
     {
-        host.ConfigureAppConfiguration((hostingContext, config) =>
-        {
-            var env = hostingContext.HostingEnvironment;
-            config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
-        });
+        var env = builder.Environment;
+
+        builder.Configuration
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables();
     }
 
     public static void ConfigureCors(this IServiceCollection services)
@@ -116,7 +115,7 @@ public static class ServiceExtensions
                 opt.Lockout.MaxFailedAccessAttempts = 3;
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
-            //.AddUserStore<TeduUserStore>()
+            .AddUserStore<IDPUserStore>()
             .AddDefaultTokenProviders();
     }
 
