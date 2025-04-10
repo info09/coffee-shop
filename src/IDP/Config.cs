@@ -51,22 +51,24 @@ public static class Config
                         "http://localhost:5001/swagger/oauth2-redirect.html",
                         "http://localhost:6001/swagger/oauth2-redirect.html",
                         "https://localhost:5002/swagger/oauth2-redirect.html",
+                        "http://localhost:6002/swagger/oauth2-redirect.html",
                     },
                     PostLogoutRedirectUris =
                     {
                         "http://localhost:5001/swagger/oauth2-redirect.html",
                         "http://localhost:6001/swagger/oauth2-redirect.html",
                         "https://localhost:5002/swagger/oauth2-redirect.html",
+                        "http://localhost:6002/swagger/oauth2-redirect.html",
                     },
-                    AllowedCorsOrigins = { "http://localhost:5001", "http://localhost:6001", "https://localhost:5002" },
-                    AllowedScopes = 
-                    { 
+                    AllowedCorsOrigins = { "http://localhost:5001", "http://localhost:6001", "https://localhost:5002", "http://localhost:6002" },
+                    AllowedScopes =
+                    {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
                         "IDP_api.read",
                         "IDP_api.write",
-                        "roles" 
+                        "roles"
                     }
                 }
             };

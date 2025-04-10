@@ -24,7 +24,7 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - "ConnectionStrings:IdentitySqlConnection=Server=idp.db;Database=IdentityServer;User Id=sa;Password=123456aA@;Multipleactiveresultsets=true;TrustServerCertificate=True;"
       - "IdentityServer:BaseUrl=http://localhost:6001"
-      - "IdentityServer:IssuerUri=http://localhost:6001"
+      - "IdentityServer:IssuerUri=http://idp.api"
     depends_on:
       - idp.db
     ports:
