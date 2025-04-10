@@ -11,7 +11,7 @@ COPY ["IDP.Presentation/IDP.Presentation.csproj", "IDP.Presentation/"]
 RUN dotnet restore "IDP/IDP.csproj"
 COPY . .
 WORKDIR "/src/IDP"
-RUN dotnet build "IDP/csproj" -c Release -o /app/build
+RUN dotnet build "IDP.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "IDP.csproj" -c Release -o /app/publish

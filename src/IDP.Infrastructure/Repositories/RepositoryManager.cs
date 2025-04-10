@@ -18,16 +18,16 @@ public class RepositoryManager : IRepositoryManager
     {
         _unitOfWork = unitOfWork;
         _context = context;
-        //UserManager = userManager;
-        //RoleManager = roleManager;
+        UserManager = userManager;
+        RoleManager = roleManager;
         _mapper = mapper;
         _permissionRepository = new Lazy<IPermissionRepository>(() => new PermissionRepository(_context, unitOfWork, userManager, mapper));
         
     }
 
-    //public UserManager<User> UserManager { get; }
+    public UserManager<User> UserManager { get; }
 
-    //public RoleManager<IdentityRole> RoleManager { get; }
+    public RoleManager<IdentityRole> RoleManager { get; }
 
     public IPermissionRepository Permission => _permissionRepository.Value;
 

@@ -49,14 +49,16 @@ public static class Config
                     RedirectUris =
                     {
                         "http://localhost:5001/swagger/oauth2-redirect.html",
+                        "http://localhost:6001/swagger/oauth2-redirect.html",
                         "https://localhost:5002/swagger/oauth2-redirect.html",
                     },
                     PostLogoutRedirectUris =
                     {
                         "http://localhost:5001/swagger/oauth2-redirect.html",
+                        "http://localhost:6001/swagger/oauth2-redirect.html",
                         "https://localhost:5002/swagger/oauth2-redirect.html",
                     },
-                    AllowedCorsOrigins = { "http://localhost:5001" },
+                    AllowedCorsOrigins = { "http://localhost:5001", "http://localhost:6001", "https://localhost:5002" },
                     AllowedScopes = 
                     { 
                         IdentityServerConstants.StandardScopes.OpenId,
